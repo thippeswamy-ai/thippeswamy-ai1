@@ -1,0 +1,181 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Department Navigation</title>
+
+<style>
+
+body{
+font-family:Arial;
+text-align:center;
+background:#f2f2f2;
+}
+
+h2{
+margin-top:30px;
+}
+
+/* Buttons */
+
+button{
+padding:12px 20px;
+margin:10px;
+font-size:18px;
+border:none;
+border-radius:8px;
+background:#007bff;
+color:white;
+cursor:pointer;
+transition:0.3s;
+}
+
+button:hover{
+background:#0056b3;
+transform:scale(1.1);
+}
+
+/* Image */
+
+img{
+width:420px;
+height:260px;
+margin-top:20px;
+border-radius:10px;
+box-shadow:0 5px 10px rgba(0,0,0,0.3);
+}
+
+#nextBtn{
+background:green;
+margin-top:15px;
+}
+
+</style>
+</head>
+
+<body>
+
+<h2>Select Department</h2>
+
+<button onclick="startNavigation('cse')">CSE</button>
+<button onclick="startNavigation('botany')">Botany</button>
+<button onclick="startNavigation('ai')">AI</button>
+<button onclick="startNavigation('zoology')">Zoology</button>
+
+<div>
+<img id="navImage" style="display:none">
+<br>
+<button id="nextBtn" onclick="nextImage()" style="display:none">Next ➜</button>
+</div>
+
+<script>
+
+let currentIndex=0;
+let currentDept="";
+
+/* Images for each department */
+
+let navigationImages={
+
+cse:["E:/thippeswamy/html/image/college.jpeg",
+"E:/thippeswamy/html/image/thipp (3).jpeg"
+
+],
+
+botany:[
+"https://via.placeholder.com/420x260?text=Botany+Step+1",
+"https://via.placeholder.com/420x260?text=Botany+Step+2"
+],
+
+ai:[
+"https://via.placeholder.com/420x260?text=AI+Step+1",
+"https://via.placeholder.com/420x260?text=AI+Step+2"
+],
+
+zoology:[
+"https://via.placeholder.com/420x260?text=Zoology+Step+1",
+"https://via.placeholder.com/420x260?text=Zoology+Step+2"
+]
+
+};
+
+/* Voice messages for navigation */
+
+let navigationVoice={
+
+cse:[
+"Go straight from the entrance",
+"Turn left near the library",
+"CSE department is on the first floor"
+],
+
+botany:[
+"Walk straight towards science block",
+"Botany department is on the right side"
+],
+
+ai:[
+"Move towards computer block",
+"AI lab is on the second floor"
+],
+
+zoology:[
+"Walk straight and turn right",
+"Zoology department is near the garden"
+]
+
+};
+
+
+/* Start navigation */
+
+function startNavigation(dept){
+
+currentDept=dept;
+currentIndex=0;
+
+document.getElementById("navImage").src=navigationImages[dept][0];
+document.getElementById("navImage").style.display="block";
+document.getElementById("nextBtn").style.display="inline-block";
+
+speak(navigationVoice[dept][0]);
+
+}
+
+
+/* Next navigation step */
+
+function nextImage(){
+
+currentIndex++;
+
+if(currentIndex < navigationImages[currentDept].length){
+
+document.getElementById("navImage").src=navigationImages[currentDept][currentIndex];
+
+speak(navigationVoice[currentDept][currentIndex]);
+
+}else{
+
+speak("You have reached your destination");
+
+alert("Destination Reached");
+
+}
+
+}
+
+
+/* Voice function */
+
+function speak(text){
+
+let speech=new SpeechSynthesisUtterance(text);
+speech.lang="en-US";
+speechSynthesis.speak(speech);
+
+}
+
+</script>
+
+</body>
+</html>
